@@ -2,6 +2,7 @@
 
 Console.WriteLine("Hello, World!");
 
+//Percent makeup of starting sample
 Steel startersteel = new Steel();
 startersteel.Chromium = 0.1479;
 startersteel.Nickel = 0.02;
@@ -14,6 +15,7 @@ startersteel.Silicon = 0.006;
 startersteel.Nitrogen = 0.0005;
 startersteel.Iron = 0.81;
 
+//Percent makeup of goal product
 Steel finalsteel = new Steel();
 finalsteel.Chromium = 0.17;
 finalsteel.Nickel = 0.12;
@@ -26,20 +28,27 @@ finalsteel.Silicon = 0.0075;
 finalsteel.Nitrogen = 0.001;
 finalsteel.Iron = 0.6549;
 
+//User inputs current weight of product
 Console.WriteLine("Insert the current weight of materials in grams: ");
 double weight = Convert.ToDouble(Console.ReadLine());
 
+//Get percent difference of starting from final
 Steel differencesteel = GetDifference(startersteel, finalsteel);
 
+//Find minimum difference to add to all elements
 double change = GetChange(differencesteel);
 
+//Find amount in grams to add to each element
 Steel addsteel = AddElements(differencesteel, change, weight);
 
-double finalweight = GetFinalWeight(addsteel);
+//Calculate how many grams the final product will weigh
+double finalweight = GetFinalWeight(addsteel, weight);
 
+//Display to amounts needed to add and final weight of sample to user
 FinalMenu(addsteel, finalweight);
 
-static double GetFinalWeight(Steel addsteel)
+//Sums grams being added with starting weight
+static double GetFinalWeight(Steel addsteel, double weight)
 {
     double chromium = addsteel.Chromium;
     double nickel = addsteel.Nickel;
@@ -54,11 +63,12 @@ static double GetFinalWeight(Steel addsteel)
 
     double[] elements = {chromium, nickel, molybdenum, carbon, manganese, phosphorus, sulfur, silicon, nitrogen, iron};
 
-    double finalweight = elements.Sum();
+    double finalweight = elements.Sum() + weight;
 
     return finalweight;
 }
 
+//Using the difference percentage, adding the change percent, and multiplying by current weight to get grams to add
 static Steel AddElements(Steel differencesteel, double change, double weight)
 {
     Steel addsteel = new Steel();
@@ -76,6 +86,7 @@ static Steel AddElements(Steel differencesteel, double change, double weight)
     return addsteel;
 }
 
+//Subtracting starting steel compostition from final to get difference for each element
 static Steel GetDifference(Steel startersteel, Steel finalsteel)
 {
     Steel differencesteel = new Steel();
@@ -93,6 +104,7 @@ static Steel GetDifference(Steel startersteel, Steel finalsteel)
     return differencesteel;
 }
 
+//Finding minimum value of differences to add to all elements
 static double GetChange(Steel differencesteel)
 {
     double chromium = differencesteel.Chromium;
@@ -113,30 +125,19 @@ static double GetChange(Steel differencesteel)
     return System.Math.Abs(change);
 }
 
+//Displays amounts to add and the total expected weight to the user
 static void FinalMenu(Steel addsteel, double weight)
 {
-    double chromium = addsteel.Chromium;
-    double nickel = addsteel.Nickel;
-    double molybdenum = addsteel.Molybdenum;
-    double carbon = addsteel.Carbon;
-    double manganese = addsteel.Manganese;
-    double phosphorus = addsteel.Phosphorus;
-    double sulfur = addsteel.Sulfur;
-    double silicon = addsteel.Silicon;
-    double nitrogen = addsteel.Nitrogen;
-    double iron = addsteel.Iron;
-
     Console.WriteLine("Elements to Add:");
-    Console.WriteLine("Chromium: " + Math.Round(chromium, 2) + " grams");
-    Console.WriteLine("Nickel: " + Math.Round(nickel, 2) + " grams");
-    Console.WriteLine("Molybdenum: " + Math.Round(molybdenum, 2) + " grams");
-    Console.WriteLine("Carbon: " + Math.Round(carbon, 2) + " grams");
-    Console.WriteLine("Manganese: " + Math.Round(manganese, 2) + " grams");
-    Console.WriteLine("Phosphorus: " + Math.Round(phosphorus, 2) + " grams");
-    Console.WriteLine("Sulfur: " + Math.Round(sulfur, 2) + " grams");
-    Console.WriteLine("Silicon: " + Math.Round(silicon, 2) + " grams");
-    Console.WriteLine("Nitrogen: " + Math.Round(nitrogen, 2) + " grams");
-    Console.WriteLine("Iron: " + Math.Round(iron, 2) + " grams");
+    Console.WriteLine("Chromium: " + Math.Round(addsteel.Chromium, 2) + " grams");
+    Console.WriteLine("Nickel: " + Math.Round(addsteel.Nickel, 2) + " grams");
+    Console.WriteLine("Molybdenum: " + Math.Round(addsteel.Molybdenum, 2) + " grams");
+    Console.WriteLine("Carbon: " + Math.Round(addsteel.Carbon, 2) + " grams");
+    Console.WriteLine("Manganese: " + Math.Round(addsteel.Manganese, 2) + " grams");
+    Console.WriteLine("Phosphorus: " + Math.Round(addsteel.Phosphorus, 2) + " grams");
+    Console.WriteLine("Sulfur: " + Math.Round(addsteel.Sulfur, 2) + " grams");
+    Console.WriteLine("Silicon: " + Math.Round(addsteel.Silicon, 2) + " grams");
+    Console.WriteLine("Nitrogen: " + Math.Round(addsteel.Nitrogen, 2) + " grams");
+    Console.WriteLine("Iron: " + Math.Round(addsteel.Iron, 2) + " grams");
     Console.WriteLine("Total Weight: " + Math.Round(weight, 2) + " grams");
-
 }
